@@ -30,10 +30,13 @@ for i in range(0,len(t)):
     fourier.append(valor)
 
 #c
-for i in range(0,len(fourier)):
-    if(fourier[i]>1000):
-        fourier[i]=0
+timestep = dt
+freq = np.fft.fftfreq(n,d=timestep)
+print (freq)
 
+for i in range(0,len(fourier)):
+    if(freq[i]>10000):
+        fourier[i]=0
 #d transformada inversa
 fourier2 = []
 for i in range(0,len(t)):
