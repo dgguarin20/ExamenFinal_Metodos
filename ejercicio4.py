@@ -7,7 +7,9 @@
 # la transformada inversa para graficar la nueva senal (figura 'filtro.png')
 
 import numpy as np
-
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 n = 512 # number of point in the whole interval
 f = 200.0 #  frequency in Hz
@@ -16,3 +18,30 @@ t = np.linspace( 0, (n-1)*dt, n)
 y = np.sin(2 * np.pi * f * t) + np.cos(2 * np.pi * f * t * t)
 noise = 1.4*(np.random.rand(n)+0.7)
 y  =  y + noise
+
+#a
+plt.plot(y,t)
+#b se que era algo asi pero no me acuerdo muy bien x x G(n/N) = sumatoria de 0 a N-1 de fx*e^((n/N)*2*pi*i)
+fourier = []
+for i in range(0,len(t)):
+    valor = 0
+    for j in range(0,n-1):
+        valor = y[j]*np.exp((t[i]/n)*-2*np.pi*j)+valor
+    fourier.append(valor)
+
+#c
+for i in range(0,len(fourier)):
+    if(fourier[i]>1000):
+        fourier[i]=0
+
+#d transformada inversa
+fourier2 = []
+for i in range(0,len(t)):
+    valor = 0
+    for j in range(0,n-1):
+        valor = fourier[j]*np.exp((t[i]/n)*2*np.pi*-j)+valor
+    fourier2.append(valor)
+
+plt.plot(t,fourier2)
+plt.savefig('filtro.png')
+
