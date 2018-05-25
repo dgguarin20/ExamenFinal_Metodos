@@ -10,6 +10,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+#from scipy.fftpack import fft, fftfreq
+
 
 n = 512 # number of point in the whole interval
 f = 200.0 #  frequency in Hz
@@ -32,7 +34,6 @@ for i in range(0,len(t)):
 #c
 timestep = dt
 freq = np.fft.fftfreq(n,d=timestep)
-print (freq)
 
 for i in range(0,len(fourier)):
     if(freq[i]>10000):
@@ -45,6 +46,9 @@ for i in range(0,len(t)):
         valor = fourier[j]*np.exp((t[i]/n)*2*np.pi*-j)+valor
     fourier2.append(valor)
 
-plt.plot(t,fourier2)
+print (fourier2)
+#segun la impresion si hay valores pero hay problemas con la grafica es como si no siguiera los puntos 
+fourier2 = np.asarray(fourier2)
+plt.scatter(t,fourier2)
 plt.savefig('filtro.png')
-
+plt.close()
